@@ -1,5 +1,6 @@
 package com.skilldistillery.films.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,7 +11,7 @@ import com.skilldistillery.mvcfilmsiteproject.dao.MVCFilmSiteDAO;
 
 @Controller
 public class FilmController {
-	
+	@Autowired
 	private MVCFilmSiteDAO filmDAO;
 	
 	@RequestMapping(path = "index.do", method = RequestMethod.GET)
@@ -28,6 +29,4 @@ public class FilmController {
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
 		return mv;
 	}
-	
-	
 }
