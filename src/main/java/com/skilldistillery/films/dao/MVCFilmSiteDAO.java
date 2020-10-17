@@ -8,5 +8,8 @@ import com.skilldistillery.films.entities.Film;
 public interface MVCFilmSiteDAO {
 
 	public Film findFilmById(int filmId);
+
 	public List<Actor> findActorsByFilmId(int filmId);
+
+	public Film addFilm(Film film);
 }
