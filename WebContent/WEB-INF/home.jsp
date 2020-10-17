@@ -11,8 +11,8 @@
 </head>
 <body>
 	<form action="searchByFilmId.do" method="GET">
-		<!-- <c:forEach var="movie" items="movies">
- -->
+
+		<!-- <c:forEach var="movie" items="movies"> -->
 
 		<p>Please enter the Film ID to begin your search</p>
 

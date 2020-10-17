@@ -5,9 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+@Component
 public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 
 	public static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
@@ -38,7 +44,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 				tempFilm.setRating(filmResult.getString("film.rating"));
 				tempFilm.setLanguage(filmResult.getString("language.name"));
 				tempFilm.setSpecialFeatures(filmResult.getString("film.special_features"));
-//				tempFilm.setActors();
+				tempFilm.setActors(findActorsByFilmId(filmId));
 			} else {
 				return null;
 			}
@@ -51,4 +57,36 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		return tempFilm;
 	}
 
+	public List<Actor> findActorsByFilmId(int filmId) {
+		
+		List<Actor> tempList = new ArrayList<>();
+		Actor tempActor;
+		String user = "student";
+		String pw = "student";
+		String sqltxt = "SELECT actor.id, actor.first_name, actor.last_name FROM actor JOIN film_actor ON actor.id = film_actor.actor_id JOIN film ON film.id = film_actor.film_id WHERE film.id = ?";
+		
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pw);
+			PreparedStatement stmt = conn.prepareStatement(sqltxt);
+			stmt.setInt(1, filmId);
+			ResultSet resultList = stmt.executeQuery();
+			if (resultList == null) {
+				return null;
+			} else {
+				while (resultList.next()) {
+					tempActor = new Actor();
+					tempActor.setId(resultList.getInt("actor.id"));
+					tempActor.setFirstName(resultList.getString("actor.first_name"));
+					tempActor.setLastName(resultList.getString("actor.last_name"));
+					tempList.add(tempActor);
+				}
+			}
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return tempList;
+	}
 }
