@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +97,58 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 			e.printStackTrace();
 		}
 		return tempList;
+	}
+
+	public Film addFilm(Film film) {
+
+//		// Creating Connection
+		Connection conn = null;
+		String user = "student";
+		String pw = "student";
+		try {
+
+//			//Connect to the Driver
+			conn = DriverManager.getConnection(URL, user, pw);
+			conn.setAutoCommit(false);
+
+//			//SQL Statement
+			String sql = "INSERT INTO film (title, language_id) VALUES (?,?)";
+
+//			//Prepare Statement
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+
+//			//Set count to the execute statement
+			int updateCount = stmt.executeUpdate();
+
+//			//Conditional Logic
+			if (updateCount == 1) {
+				ResultSet rs = stmt.getGeneratedKeys();
+				if (rs.next()) {
+					int newFilmId = rs.getInt(1);
+					film.setId(newFilmId);
+
+					if (film.getTitle() != null) {
+						stmt = conn.prepareStatement(sql);
+						updateCount = stmt.executeUpdate();
+					}
+				}
+			} else {
+				film = null;
+			}
+
+			conn.commit();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error in rollback");
+				}
+			}
+			throw new RuntimeException("Error inserting this film " + film);
+		}
+		return film;
 	}
 }
