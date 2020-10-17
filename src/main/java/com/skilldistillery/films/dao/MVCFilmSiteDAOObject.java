@@ -106,38 +106,29 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		String user = "student";
 		String pw = "student";
 		try {
-
 //			//Connect to the Driver
 			conn = DriverManager.getConnection(URL, user, pw);
 			conn.setAutoCommit(false);
-
 //			//SQL Statement
 			String sql = "INSERT INTO film (title, language_id) VALUES (?,?)";
 //			//Prepare Statement
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setInt(2, film.getLanguageId());
-
-			System.out.println(stmt);
 //			//Set count to the execute statement
 			int updateCount = stmt.executeUpdate();
-
 //			//Conditional Logic
 			if (updateCount == 1) {
 				ResultSet rs = stmt.getGeneratedKeys();
 				if (rs.next()) {
 					int newFilmId = rs.getInt(1);
 					film.setId(newFilmId);
-
-//					if (film.getTitle() != null) {
-//						stmt = conn.prepareStatement(sql);
-//					}
+					//TODO: Add code for film_actor table,  if addActor(); is added later
 				}
 			} else {
 				film = null;
 			}
-
-			
+			conn.commit();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -153,8 +144,39 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 	}
 
 	@Override
-	public String findLanguageById(int languageId) {
-		
-		return null;
+	public boolean deleteFilm(Film film) {
+		String user = "student";
+		String pw = "student";
+		Connection conn = null;
+		  try {
+		    conn = DriverManager.getConnection(URL, user, pw);
+		    conn.setAutoCommit(false); 
+		    String sql = "DELETE FROM film_actor WHERE film_id = ?"; //Added in case we decide to input Actors later
+		    PreparedStatement stmt = conn.prepareStatement(sql);
+		    stmt.setInt(1, film.getId());
+		    int updateCount = stmt.executeUpdate();
+		    sql = "DELETE FROM film WHERE film.id = ?";
+		    stmt = conn.prepareStatement(sql);
+		    stmt.setInt(1, film.getId());
+		    updateCount = stmt.executeUpdate();
+		    conn.commit();             // COMMIT TRANSACTION
+		  }
+		  catch (SQLException sqle) {
+		    sqle.printStackTrace();
+		    if (conn != null) {
+		      try { conn.rollback(); }
+		      catch (SQLException sqle2) {
+		        System.err.println("Error trying to rollback");
+		      }
+		    }
+		    return false;
+		  }
+		return true;
 	}
 }
+//
+//	@Override
+//	public String findLanguageById(int languageId) {
+//
+//		return null;
+//	}
