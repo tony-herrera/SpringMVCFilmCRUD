@@ -33,10 +33,10 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(String title, String language, RedirectAttributes redir) {
+	public ModelAndView addFilm(String title, Integer language, RedirectAttributes redir) {
 		Film tempFilm = new Film();
 		tempFilm.setTitle(title);
-		tempFilm.setLanguage(language);
+		tempFilm.setLanguageId(language);
 		filmDAO.addFilm(tempFilm);
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("film", tempFilm);

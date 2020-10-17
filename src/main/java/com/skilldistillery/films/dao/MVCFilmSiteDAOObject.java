@@ -113,11 +113,12 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 
 //			//SQL Statement
 			String sql = "INSERT INTO film (title, language_id) VALUES (?,?)";
-
 //			//Prepare Statement
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
+			stmt.setInt(2, film.getLanguageId());
 
+			System.out.println(stmt);
 //			//Set count to the execute statement
 			int updateCount = stmt.executeUpdate();
 
@@ -128,16 +129,15 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 					int newFilmId = rs.getInt(1);
 					film.setId(newFilmId);
 
-					if (film.getTitle() != null) {
-						stmt = conn.prepareStatement(sql);
-						updateCount = stmt.executeUpdate();
-					}
+//					if (film.getTitle() != null) {
+//						stmt = conn.prepareStatement(sql);
+//					}
 				}
 			} else {
 				film = null;
 			}
 
-			conn.commit();
+			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -150,5 +150,11 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 			throw new RuntimeException("Error inserting this film " + film);
 		}
 		return film;
+	}
+
+	@Override
+	public String findLanguageById(int languageId) {
+		
+		return null;
 	}
 }

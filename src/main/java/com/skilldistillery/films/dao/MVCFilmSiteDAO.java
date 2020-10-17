@@ -12,4 +12,6 @@ public interface MVCFilmSiteDAO {
 	public List<Actor> findActorsByFilmId(int filmId);
 
 	public Film addFilm(Film film);
+
+	public String findLanguageById(int languageId);
 }

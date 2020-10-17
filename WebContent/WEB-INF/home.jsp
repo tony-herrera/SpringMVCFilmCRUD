@@ -10,17 +10,17 @@
 <H1>Welcome to the Film Query</H1>
 </head>
 <body>
+<div>
 	<form action="searchByFilmId.do" method="GET">
-
-
 		<p>Please enter the Film ID to begin your search</p>
-
-
 		<input type="text" name="filmId" class="search"
 			placeholder="Place your selection here..."> <input
 			type="submit" name="submit" class="submit" value="Search">
-
-
 	</form>
+</div>
+<div>
+<a href="NewFilm.html">Add a New Film </a><br/>
+
+</div>	
 </body>
 </html>

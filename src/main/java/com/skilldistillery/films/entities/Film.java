@@ -8,6 +8,7 @@ public class Film {
 	private String title;
 	private String description;
 	private int releaseYear;
+	private int languageId;
 	private String language;
 	private int rentalDuration;
 	private double rentalRate;
@@ -21,7 +22,7 @@ public class Film {
 
 	}
 
-	public Film(int id, String title, String description, int releaseYear, String language, int rentalDuration,
+	public Film(int id, String title, String description, int releaseYear, int languageId, String language, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
 			List<Actor> actors) {
 		super();
@@ -29,6 +30,7 @@ public class Film {
 		this.title = title;
 		this.description = description;
 		this.releaseYear = releaseYear;
+		this.languageId = languageId;
 		this.language = language;
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
@@ -222,6 +224,8 @@ public class Film {
 		builder.append(description);
 		builder.append(", releaseYear=");
 		builder.append(releaseYear);
+		builder.append(", languageId=");
+		builder.append(languageId);
 		builder.append(", language=");
 		builder.append(language);
 		builder.append(", rentalDuration=");
@@ -240,6 +244,14 @@ public class Film {
 		builder.append(actors);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public int getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId(int languageId) {
+		this.languageId = languageId;
 	}
 
 }
