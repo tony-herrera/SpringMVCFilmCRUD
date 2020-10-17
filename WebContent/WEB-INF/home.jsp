@@ -9,7 +9,7 @@
 <H1>Welcome to the Film Query</H1>
 </head>
 <body>
-	<form action="form/submit" method="GET">
+	<form action="searchByFilmId.do" method="GET">
 		<c:forEach var="movie" items="movies">
 
 
