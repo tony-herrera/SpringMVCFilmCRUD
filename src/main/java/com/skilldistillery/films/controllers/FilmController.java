@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.skilldistillery.film.entities.Film;
-import com.skilldistillery.mvcfilmsiteproject.dao.MVCFilmSiteDAO;
+import com.skilldistillery.films.dao.MVCFilmSiteDAO;
+import com.skilldistillery.films.entities.Film;
 
 @Controller
 public class FilmController {

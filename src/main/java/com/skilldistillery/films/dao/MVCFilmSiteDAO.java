@@ -1,9 +1,9 @@
-package com.skilldistillery.mvcfilmsiteproject.dao;
+package com.skilldistillery.films.dao;
 
 import java.util.List;
 
-import com.skilldistillery.film.entities.Actor;
-import com.skilldistillery.film.entities.Film;
+import com.skilldistillery.films.entities.Actor;
+import com.skilldistillery.films.entities.Film;
 
 public interface MVCFilmSiteDAO {
 
