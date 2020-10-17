@@ -1,5 +1,8 @@
 package com.skilldistillery.mvcfilmsiteproject.dao;
 
-public class MVCFilmSiteDAO {
+import com.skilldistillery.film.entities.Film;
 
+public interface MVCFilmSiteDAO {
+
+	public Film findFilmById(int filmId);
 }
