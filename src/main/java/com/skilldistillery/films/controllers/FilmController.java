@@ -68,4 +68,21 @@ public class FilmController {
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
 		return mv;
 	}
+	
+	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
+	public ModelAndView changeFilm(Integer filmId, String title, String description) {
+		ModelAndView mv = new ModelAndView();
+		filmDAO.findFilmById(filmId);
+		Film film = filmDAO.findFilmById(filmId);
+		if(!title.equals("")) {
+			film.setTitle(title);
+		}
+		if(!description.equals("")) {
+			film.setDescription(description);
+		}
+		filmDAO.changeFilm(film);
+		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
+		return null;
+		
+	}
 }
