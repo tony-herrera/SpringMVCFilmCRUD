@@ -1,5 +1,6 @@
 package com.skilldistillery.films.controllers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,19 +38,23 @@ public class FilmController {
 
 	@RequestMapping(path = "searchByKeyword.do", method = RequestMethod.GET)
 	public ModelAndView findFilmByKeyword(String keyWord) {
-		List <Film> filmList = new ArrayList<>();
+		List<Film> filmList = new ArrayList<>();
 		if (keyWord == null || keyWord.equals("")) {
 			filmList = null;
 		} else {
-			filmList = filmDAO.findFilmsByKeyword(keyWord);
+			try {
+				filmList = filmDAO.findFilmsByKeyword(keyWord);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		ModelAndView mv = new ModelAndView();
-		
+
 		mv.addObject("filmList", filmList);
-		mv.setViewName("WEB-INF/SingleFilmResult,jsp");
+		mv.setViewName("WEB-INF/MultiFilmResult.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(String title, Integer language, RedirectAttributes redir) {
 		Film tempFilm = new Film();
@@ -86,16 +91,16 @@ public class FilmController {
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView changeFilm(Integer filmId, String title, String description) {
 		ModelAndView mv = new ModelAndView();
 		filmDAO.findFilmById(filmId);
 		Film film = filmDAO.findFilmById(filmId);
-		if(!title.equals("")) {
+		if (!title.equals("")) {
 			film.setTitle(title);
 		}
-		if(!description.equals("")) {
+		if (!description.equals("")) {
 			film.setDescription(description);
 		}
 		filmDAO.changeFilm(film);
@@ -103,7 +108,7 @@ public class FilmController {
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(path = "redirToUpdate.do", method = RequestMethod.POST)
 	public ModelAndView redirToUpdate(Integer filmId) {
 		ModelAndView mv = new ModelAndView();
@@ -111,5 +116,5 @@ public class FilmController {
 		mv.setViewName("WEB-INF/UpdateFilm.jsp");
 		return mv;
 	}
-	
+
 }

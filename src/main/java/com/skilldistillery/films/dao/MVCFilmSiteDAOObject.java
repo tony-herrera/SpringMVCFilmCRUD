@@ -218,4 +218,38 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		}
 		return film;
 	}
+
+	public List<Film> findFilmsByKeyword(String keyword) throws SQLException {
+		List<Film> kw = new ArrayList<>();
+
+		String user = "student";
+		String pw = "student";
+
+		// Establish Connection
+		Connection conn = DriverManager.getConnection(URL, user, pw);
+
+		// Establish SQL statement
+		String sql = "SELECT * FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+
+		// Prepare Statement
+		PreparedStatement stmt = conn.prepareStatement(sql);
+
+		// Execute
+		stmt.setString(1, "%" + kw + "%");
+		stmt.setString(2, "%" + kw + "%");
+		ResultSet rs = stmt.executeQuery();
+
+		// Process Data
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String title = rs.getString("title");
+			String description = rs.getString("description");
+			Film wordInFilm = new Film(id, title, description);
+			kw.add(wordInFilm);
+
+		}
+		return kw;
+
+	}
+
 }
