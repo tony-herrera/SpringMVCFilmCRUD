@@ -19,6 +19,14 @@
 	</form>
 </div>
 <div>
+	<form action="searchByKeyword.do" method="GET">
+		<p>Please enter the keyword to begin your search</p>
+		<input type="text" name="keyWord" class="search"
+			placeholder="Place your selection here..."> <input
+			type="submit" name="submit" class="submit" value="Search">
+	</form>
+</div>
+<div>
 <a href="NewFilm.html">Add a New Film </a><br/>
 
 </div>	
