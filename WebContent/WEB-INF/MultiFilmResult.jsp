@@ -8,9 +8,14 @@
 <title>List of Films from Search</title>
 </head>
 <body>
-Film list printout: ${filmList}
+<h1 style="text-align:center">List of Films from Keyword Search</h1>
 	<div>
 		<table>
+		<tr>
+		<th> Film ID </th>
+		<th> Film Title </th>
+		<th> Film Description </th>
+		</tr>
 			<c:forEach var="film" items="${filmList}">
 				<tr>
 					<td>${film.id}</td>
