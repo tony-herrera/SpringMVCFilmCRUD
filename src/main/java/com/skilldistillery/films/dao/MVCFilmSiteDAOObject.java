@@ -123,7 +123,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 				if (rs.next()) {
 					int newFilmId = rs.getInt(1);
 					film.setId(newFilmId);
-					//TODO: Add code for film_actor table,  if addActor(); is added later
+					// TODO: Add code for film_actor table, if addActor(); is added later
 				}
 			} else {
 				film = null;
@@ -148,35 +148,72 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		String user = "student";
 		String pw = "student";
 		Connection conn = null;
-		  try {
-		    conn = DriverManager.getConnection(URL, user, pw);
-		    conn.setAutoCommit(false); 
-		    String sql = "DELETE FROM film_actor WHERE film_id = ?"; //Added in case we decide to input Actors later
-		    PreparedStatement stmt = conn.prepareStatement(sql);
-		    stmt.setInt(1, film.getId());
-		    int updateCount = stmt.executeUpdate();
-		    sql = "DELETE FROM film WHERE film.id = ?";
-		    stmt = conn.prepareStatement(sql);
-		    stmt.setInt(1, film.getId());
-		    updateCount = stmt.executeUpdate();
-		    conn.commit();             // COMMIT TRANSACTION
-		  }
-		  catch (SQLException sqle) {
-		    sqle.printStackTrace();
-		    if (conn != null) {
-		      try { conn.rollback(); }
-		      catch (SQLException sqle2) {
-		        System.err.println("Error trying to rollback");
-		      }
-		    }
-		    return false;
-		  }
+		try {
+			conn = DriverManager.getConnection(URL, user, pw);
+			conn.setAutoCommit(false);
+			String sql = "DELETE FROM film_actor WHERE film_id = ?"; // Added in case we decide to input Actors later
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, film.getId());
+			stmt.executeUpdate();
+			sql = "DELETE FROM film WHERE film.id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, film.getId());
+			stmt.executeUpdate();
+			conn.commit(); // COMMIT TRANSACTION
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			return false;
+		}
 		return true;
 	}
+
+	public Film changeFilm(Film film) {
+
+		String user = "student";
+		String pw = "student";
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(URL, user, pw);
+			conn.setAutoCommit(false);
+			String sql = "UPDATE film SET film.title = ?, film.description =? WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getId());
+			int updateCount = stmt.executeUpdate();
+			if (updateCount == 1) {
+				conn.commit();
+				stmt.close();
+				conn.close();
+			} else {
+				System.out.println(updateCount);
+				conn.rollback();
+				stmt.close();
+				conn.close();
+			}
+
+		} catch (SQLException e) {
+			System.err.println("Error during inserts.");
+			System.err.println("SQL Error: " + e.getErrorCode() + ": " + e.getMessage());
+			System.err.println("SQL State: " + e.getSQLState());
+			if (conn != null) {
+				try {
+					conn.rollback();
+					conn.close();
+				} catch (SQLException e1) {
+					System.err.println("Error rolling back.");
+					e1.printStackTrace();
+				}
+			}
+		}
+		return film;
+	}
 }
-//
-//	@Override
-//	public String findLanguageById(int languageId) {
-//
-//		return null;
-//	}
