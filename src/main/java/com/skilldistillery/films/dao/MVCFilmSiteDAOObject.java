@@ -37,9 +37,9 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		Film tempFilm = new Film();
 		String user = "student";
 		String pw = "student";
-		String sqltxt = "SELECT film.id," + "   film.title," + "   film.description," + "   film.release_year,"
-				+ "   film.length," + "   film.rating," + "   film.special_features," + "   language.name"
-				+ "   FROM film" + "   JOIN language ON film.language_id = language.id" + "   WHERE film.id = ?";
+		String sqltxt = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id  \n"
+				+ "JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id\n"
+				+ "WHERE film.id = ?";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pw);
@@ -54,6 +54,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 				tempFilm.setLength(filmResult.getInt("film.length"));
 				tempFilm.setRating(filmResult.getString("film.rating"));
 				tempFilm.setLanguage(filmResult.getString("language.name"));
+				tempFilm.setCategory(filmResult.getString("category.name"));
 				tempFilm.setSpecialFeatures(filmResult.getString("film.special_features"));
 				tempFilm.setActors(findActorsByFilmId(filmId));
 			} else {
@@ -125,8 +126,11 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 				if (rs.next()) {
 					int newFilmId = rs.getInt(1);
 					film.setId(newFilmId);
-					// TODO: Add code for film_actor table, if addActor(); is added later
 				}
+				sql = "INSERT INTO film_category (film_id, category_id) VALUES (?,11)";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, film.getId());
+				updateCount = stmt.executeUpdate();
 			} else {
 				film = null;
 			}
@@ -220,7 +224,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 	}
 
 	public List<Film> findFilmsByKeyword(String keyword) throws SQLException {
-		List<Film> kw = new ArrayList<>();
+		List<Film> films = new ArrayList<>();
 
 		String user = "student";
 		String pw = "student";
@@ -229,7 +233,9 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		Connection conn = DriverManager.getConnection(URL, user, pw);
 
 		// Establish SQL statement
-		String sql = "SELECT * FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+		String sql = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id  \n"
+				+ "JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id\n"
+				+ "WHERE film.title LIKE ? OR film.description LIKE ?";
 
 		// Prepare Statement
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -241,17 +247,28 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 
 		// Process Data
 		while (rs.next()) {
-			int id = rs.getInt("id");
-			String title = rs.getString("title");
-			String description = rs.getString("description");
-			Film wordInFilm = new Film(id, title, description);
-			kw.add(wordInFilm);
+			Film film = new Film();
+			film.setId(rs.getInt("id"));
+			film.setTitle(rs.getString("title"));
+			film.setDescription(rs.getString("description"));
+			film.setReleaseYear(rs.getInt("release_year"));
+			film.setLanguage(rs.getString("name"));
+			film.setRentalDuration(rs.getInt("rental_duration"));
+			film.setRentalRate(rs.getDouble("rental_rate"));
+			film.setLength(rs.getInt("length"));
+			film.setReplacementCost(rs.getDouble("replacement_cost"));
+			film.setRating(rs.getString("rating"));
+			film.setCategory(rs.getString("category.name"));
+			film.setSpecialFeatures(rs.getString("special_features"));
+			film.setActors(findActorsByFilmId(rs.getInt("id")));
+
+			films.add(film);
 
 		}
 
 		stmt.close();
 		conn.close();
-		return kw;
+		return films;
 
 	}
 

@@ -16,13 +16,15 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
+	private String category;
+
 	private List<Actor> actors;
 
 	public Film() {
 
 	}
 
-	public Film(int id, String title, String description, int releaseYear, int languageId, String language,
+	public Film(int id, String title, String description, int releaseYear, int languageId, String language, String category,
 			int rentalDuration, double rentalRate, int length, double replacementCost, String rating,
 			String specialFeatures, List<Actor> actors) {
 		super();
@@ -41,12 +43,6 @@ public class Film {
 		this.actors = actors;
 	}
 
-	public Film(int id, String title, String description) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getId() {
 		return id;
@@ -136,6 +132,14 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+	
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	public List<Actor> getActors() {
 		return actors;
 	}
@@ -149,9 +153,11 @@ public class Film {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((language == null) ? 0 : language.hashCode());
+		result = prime * result + languageId;
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + releaseYear;
@@ -180,6 +186,11 @@ public class Film {
 				return false;
 		} else if (!actors.equals(other.actors))
 			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -191,6 +202,8 @@ public class Film {
 			if (other.language != null)
 				return false;
 		} else if (!language.equals(other.language))
+			return false;
+		if (languageId != other.languageId)
 			return false;
 		if (length != other.length)
 			return false;
@@ -247,6 +260,8 @@ public class Film {
 		builder.append(rating);
 		builder.append(", specialFeatures=");
 		builder.append(specialFeatures);
+		builder.append(", category=");
+		builder.append(category);
 		builder.append(", actors=");
 		builder.append(actors);
 		builder.append("]");
