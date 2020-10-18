@@ -10,18 +10,18 @@
 </head>
 <body>
 	<div>
-		<form action="redirToUpdate.do”" method="POST">
+		<form action="updateFilm.do”" method="POST">
 			<h2>
 				Film ID: ${film.id} <br> Film Title: ${film.title} <br>
 				Film Description: ${film.description} <br>
 			</h2>
 			<label for="title"> Title of the Film</label> 
-			<input type="text" name="name" value="title"> <br> 
+			<input type="text" name="title" value=${film.title }> <br> 
 			<label for="description">Description</label>
-			 <input type="text" name="name" value="description"> 
+			 <input type="text" name="description" value=${film.description }> 
 			 <input type="submit" name="name" value="submit">Submit
 		</form>
-	</div>
+	</div> 
 </body>
 </html>
 

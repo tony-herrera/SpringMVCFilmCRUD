@@ -82,7 +82,7 @@ public class FilmController {
 		}
 		filmDAO.changeFilm(film);
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
-		return null;
+		return mv;
 	}
 	
 	@RequestMapping(path = "redirToUpdate.do", method = RequestMethod.POST)
@@ -90,7 +90,7 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("film", filmDAO.findFilmById(filmId));
 		mv.setViewName("WEB-INF/UpdateFilm.jsp");
-		return null;
+		return mv;
 	}
 	
 }

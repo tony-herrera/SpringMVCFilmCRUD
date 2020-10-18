@@ -16,8 +16,8 @@
 					Film ID: ${film.id} <br>Film Title: ${film.title}
 				</h2>
 				<h4>Would you like to delete this Film from the Database?</h4>
-				<form action="updateFilm.do" method="POST">
-					<button type="submit" name="id" value="${film.id}">Update</button>
+				<form action="redirToUpdate.do" method="POST">
+					<button type="submit" name="filmId" value="${film.id}">Update</button>
 					</form>
 				<br>
 				<form action="deleteFilm.do" method="POST">
