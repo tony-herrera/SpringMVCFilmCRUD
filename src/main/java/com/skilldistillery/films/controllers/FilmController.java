@@ -81,6 +81,7 @@ public class FilmController {
 			film.setDescription(description);
 		}
 		filmDAO.changeFilm(film);
+		mv.addObject("film", film);
 		mv.setViewName("WEB-INF/SingleFilmResult.jsp");
 		return mv;
 	}

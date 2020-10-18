@@ -10,12 +10,12 @@
 </head>
 <body>
 	<div>
-		<form action="updateFilm.do" method="POST">
 			<h2>
 				Film ID: ${film.id} <br> Film Title: ${film.title} <br>
 				Film Description: ${film.description} <br>
 			</h2>
-			<input type="hidden" name=“filmId” value="${film.id}">
+		<form action="updateFilm.do" method="POST">
+			<input type="hidden" name="filmId" value="${film.id}">
 			<label for="title"> Title of the Film</label> 
 			<input type="text" name="title" value="${film.title}"> <br> 
 			<label for="description">Description</label>
@@ -23,6 +23,7 @@
 			 <input type="submit" name="name">
 		</form>
 	</div> 
+	<a href="index.do">Go to HomePage</a><br/>
 </body>
 </html>
 

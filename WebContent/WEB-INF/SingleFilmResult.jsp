@@ -15,7 +15,7 @@
 				<h2>
 					Film ID: ${film.id} <br>Film Title: ${film.title}
 				</h2>
-				<h4>Would you like to delete this Film from the Database?</h4>
+				<h4>What would you like to do with this film?</h4>
 				<form action="redirToUpdate.do" method="POST">
 					<button type="submit" name="filmId" value="${film.id}">Update</button>
 					</form>
@@ -29,6 +29,7 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	
 </body>
 </html>
 
