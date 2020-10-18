@@ -58,7 +58,7 @@ public class FilmController {
 		filmDAO.deleteFilm(tempFilm);
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("film", tempFilm);
-		mv.setViewName("redirect:filmDeleted.do");
+		mv.setViewName("redirect: index.do");
 		return mv;
 	}
 

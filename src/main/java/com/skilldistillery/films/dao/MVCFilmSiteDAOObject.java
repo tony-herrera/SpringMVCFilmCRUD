@@ -37,7 +37,9 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		Film tempFilm = new Film();
 		String user = "student";
 		String pw = "student";
-		String sqltxt = "SELECT film.id, film.title, film.description, film.release_year, film.length, film.rating, film.special_features, language.name, category.name FROM film JOIN film_category ON film.id = film_category.film_id JOIN category ON category.id = film_category.category_id JOIN language ON film.language_id = language.id WHERE film.id = ?";
+		String sqltxt = "SELECT film.id," + "   film.title," + "   film.description," + "   film.release_year,"
+				+ "   film.length," + "   film.rating," + "   film.special_features," + "   language.name"
+				+ "   FROM film" + "   JOIN language ON film.language_id = language.id" + "   WHERE film.id = ?";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pw);
