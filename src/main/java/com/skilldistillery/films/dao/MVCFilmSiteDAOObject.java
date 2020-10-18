@@ -235,8 +235,8 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 
 		// Execute
-		stmt.setString(1, "%" + kw + "%");
-		stmt.setString(2, "%" + kw + "%");
+		stmt.setString(1, "%" + keyword + "%");
+		stmt.setString(2, "%" + keyword + "%");
 		ResultSet rs = stmt.executeQuery();
 
 		// Process Data
@@ -248,6 +248,9 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 			kw.add(wordInFilm);
 
 		}
+
+		stmt.close();
+		conn.close();
 		return kw;
 
 	}
