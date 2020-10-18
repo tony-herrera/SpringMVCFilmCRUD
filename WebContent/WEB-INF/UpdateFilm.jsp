@@ -10,20 +10,21 @@
 </head>
 <body>
 	<div>
-			<h2>
-				Film ID: ${film.id} <br> Film Title: ${film.title} <br>
-				Film Description: ${film.description} <br>
-			</h2>
+		<h2>
+			Film ID: ${film.id} <br> Film Title: ${film.title} <br>
+			Film Description: ${film.description} <br>
+		</h2>
 		<form action="updateFilm.do" method="POST">
-			<input type="hidden" name="filmId" value="${film.id}">
-			<label for="title"> Title of the Film</label> 
-			<input type="text" name="title" value="${film.title}"> <br> 
-			<label for="description">Description</label>
-			 <input type="text" name="description" value="${film.description}"> 
-			 <input type="submit" name="name">
+			<input type="hidden" name="filmId" value="${film.id}"> <label
+				for="title"> Title of the Film</label> <input type="text"
+				name="title" value="${film.title}"> <br> <label
+				for="description">Description</label> <input type="text"
+				name="description" value="${film.description}"> <input
+				type="submit" name="name">
 		</form>
-	</div> 
-	<a href="index.do">Go to HomePage</a><br/>
+	</div>
+	<a href="index.do">Go to HomePage</a>
+	<br />
 </body>
 </html>
 
