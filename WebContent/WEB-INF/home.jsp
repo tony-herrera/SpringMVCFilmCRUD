@@ -27,6 +27,7 @@
 	</form>
 </div>
 <div>
+<br>
 <a href="NewFilm.html">Add a New Film </a><br/>
 
 </div>	

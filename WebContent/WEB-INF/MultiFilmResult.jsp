@@ -28,8 +28,13 @@
 							<button type="submit" name="id" value="${film.id}">Delete</button>
 						</form></td>
 				</tr>
+				<tr>
+				<td><hr></td>
+				</tr>
 			</c:forEach>
 		</table>
 	</div>
+	<br>
+	<a href="index.do">Go to HomePage</a>
 </body>
 </html>

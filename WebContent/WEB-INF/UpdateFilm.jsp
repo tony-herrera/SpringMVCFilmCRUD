@@ -19,10 +19,11 @@
 				for="title"> Title of the Film</label> <input type="text"
 				name="title" value="${film.title}"> <br> <label
 				for="description">Description</label> <input type="text"
-				name="description" value="${film.description}"> <input
+				name="description" size="75" value="${film.description}"> <input
 				type="submit" name="name">
 		</form>
 	</div>
+	<br>
 	<a href="index.do">Go to HomePage</a>
 	<br />
 </body>
