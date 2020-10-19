@@ -111,11 +111,12 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 			conn = DriverManager.getConnection(URL, user, pw);
 			conn.setAutoCommit(false);
 //			//SQL Statement
-			String sql = "INSERT INTO film (title, language_id) VALUES (?,?)";
+			String sql = "INSERT INTO film (title, language_id, description) VALUES (?,?,?)";
 //			//Prepare Statement
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setInt(2, film.getLanguageId());
+			stmt.setString(3, film.getDescription());
 //			//Set count to the execute statement
 			int updateCount = stmt.executeUpdate();
 //			//Conditional Logic
