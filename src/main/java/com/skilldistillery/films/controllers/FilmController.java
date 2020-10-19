@@ -83,9 +83,10 @@ public class FilmController {
 		if (id <= 1000) {
 			mv.setViewName("WEB-INF/Undeletable.jsp");
 		} else {
-		filmDAO.deleteFilm(tempFilm);
-		redir.addFlashAttribute("film", tempFilm);
-		mv.setViewName("redirect: filmDeleted.do");}
+			filmDAO.deleteFilm(tempFilm);
+			redir.addFlashAttribute("film", tempFilm);
+			mv.setViewName("redirect: filmDeleted.do");
+		}
 		return mv;
 	}
 
