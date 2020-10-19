@@ -56,9 +56,10 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(String title, Integer language, RedirectAttributes redir) {
+	public ModelAndView addFilm(String title, String description, Integer language, RedirectAttributes redir) {
 		Film tempFilm = new Film();
 		tempFilm.setTitle(title);
+		tempFilm.setDescription(description);
 		tempFilm.setLanguageId(language);
 		filmDAO.addFilm(tempFilm);
 		ModelAndView mv = new ModelAndView();
@@ -77,11 +78,14 @@ public class FilmController {
 	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
 	public ModelAndView deleteFilm(Integer id, RedirectAttributes redir) {
 		Film tempFilm = new Film();
-		tempFilm.setId(id);
-		filmDAO.deleteFilm(tempFilm);
 		ModelAndView mv = new ModelAndView();
+		tempFilm.setId(id);
+		if (id <= 1000) {
+			mv.setViewName("WEB-INF/Undeletable.jsp");
+		} else {
+		filmDAO.deleteFilm(tempFilm);
 		redir.addFlashAttribute("film", tempFilm);
-		mv.setViewName("redirect: index.do");
+		mv.setViewName("redirect: filmDeleted.do");}
 		return mv;
 	}
 

@@ -37,9 +37,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		Film tempFilm = new Film();
 		String user = "student";
 		String pw = "student";
-		String sqltxt = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id  \n"
-				+ "JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id\n"
-				+ "WHERE film.id = ?";
+		String sqltxt = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id WHERE film.id = ?";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pw);
@@ -157,7 +155,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		try {
 			conn = DriverManager.getConnection(URL, user, pw);
 			conn.setAutoCommit(false);
-			String sql = "DELETE FROM film_actor WHERE film_id = ?"; // Added in case we decide to input Actors later
+			String sql = "DELETE FROM film_category WHERE film_id = ?"; // Added in case we decide to input Actors later
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, film.getId());
 			stmt.executeUpdate();
@@ -233,9 +231,7 @@ public class MVCFilmSiteDAOObject implements MVCFilmSiteDAO {
 		Connection conn = DriverManager.getConnection(URL, user, pw);
 
 		// Establish SQL statement
-		String sql = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id  \n"
-				+ "JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id\n"
-				+ "WHERE film.title LIKE ? OR film.description LIKE ?";
+		String sql = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id WHERE film.title LIKE ? OR film.description LIKE ?";
 
 		// Prepare Statement
 		PreparedStatement stmt = conn.prepareStatement(sql);
